@@ -7,6 +7,14 @@ Una aplicación en Java para calcular y gestionar calorías de alimentos y comid
 
 ---
 
+## Funcionalidades implementadas
+- Login de usuario (funcionando).
+- Registro de usuarios (funcionando).
+- Validaciones en formularios (funcionando) — comprobación de campos requeridos, formatos y mensajes de error amistosos.
+- Navegación básica implementada (parcial) — pantallas principales enlazadas y flujo principal operativo; quedan por pulir transiciones y rutas secundarias.
+
+---
+
 ## Características principales
 - Registrar alimentos (nombre, calorías por 100g/porción, categoría).
 - Crear comidas sumando calorías de varios alimentos.
@@ -100,5 +108,26 @@ Buenas ideas de contribución:
 - Exportar/importar datos (CSV/JSON)
 - App móvil ligera que consuma una API
 
+---
+
+## Tests
+- Si usas Maven:
+  mvn test
+- Si usas Gradle:
+  ./gradlew test
+
+Añade pruebas unitarias con JUnit para la lógica de cálculo y parsing.
+
+---
+
+## Licencia
+Sugerido: MIT — ligero y permissivo.
+
+---
+
 ## Contacto
 Creado por Jjuanki.
+
+---
+
+¡Listo! Si quieres, adapto el README al estilo que prefieras (más técnico, más visual con badges y screenshots, o traducido a inglés).
