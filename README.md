@@ -1,86 +1,128 @@
-🍎 Calorie Tracking App
-Aplicación móvil Android desarrollada en Kotlin nativo para el registro y seguimiento de la ingesta diaria de calorías.
+# Aplicación Calorías 🥗🔥
 
-📖 Descripción
-Calorie Tracking App permite a los usuarios registrar los alimentos consumidos durante el día y visualizar de forma sencilla su progreso nutricional respecto a un objetivo calórico diario.
+Una aplicación en Java para calcular y gestionar calorías de alimentos y comidas. Sencilla, extensible y lista para convertirse en tu asistente de seguimiento de energía diaria.
 
-El proyecto busca ofrecer una experiencia intuitiva y visualmente atractiva, facilitando el monitoreo de hábitos alimenticios saludables mediante una interfaz moderna inspirada en principios de diseño minimalista.
+> Descripción
+> Una herramienta para registrar alimentos, calcular calorías por porción y obtener reportes sencillos. Ideal como proyecto educativo, demo o base para una app más grande.
 
-✨ Características
-📋 Registro de alimentos consumidos.
-🔥 Cálculo automático de calorías ingeridas.
-🎯 Configuración de objetivo calórico diario.
-📊 Seguimiento del progreso nutricional.
-📱 Interfaz moderna y amigable para dispositivos Android.
-💾 Persistencia local de datos.
-⚙️ Pantalla de ajustes para personalización básica.
-🎨 Diseño
-La interfaz fue prototipada en Figma priorizando:
+---
 
-Navegación simple e intuitiva.
-Visualización rápida del estado diario.
-Uso de colores vibrantes para mejorar la experiencia visual.
-Componentes claros y accesibles.
-Pantallas principales
-Inicio
+## Características principales
+- Registrar alimentos (nombre, calorías por 100g/porción, categoría).
+- Crear comidas sumando calorías de varios alimentos.
+- Consultar historial y totales por día.
+- API/CLI básica para integración rápida.
+- Estructura modular para escalar (persistencia, UI, API REST).
 
-Calorías consumidas.
-Calorías restantes.
-Objetivo diario.
-Lista de alimentos registrados.
-Progreso
+---
 
-Resumen de consumo.
-Estadísticas de seguimiento.
-Ajustes
+## Tecnología
+- Lenguaje: Java 11+ (100% del repo)
+- Opcional: Maven o Gradle para build y dependencias
+- Recomendado para pruebas: JUnit
 
-Configuración de metas y preferencias.
-🏗️ Tecnologías utilizadas
-Tecnología	Uso
-Kotlin	Desarrollo principal
-Android SDK	Plataforma móvil
-Android Studio	Entorno de desarrollo
-Material Design	Componentes de interfaz
-Git & GitHub	Control de versiones
-📂 Estructura del proyecto
-app/
-├── data/
-│   ├── model/
-│   ├── repository/
-│   └── datasource/
-│
-├── ui/
-│   ├── screens/
-│   ├── components/
-│   └── theme/
-│
-├── viewmodel/
-│
-├── utils/
-│
-└── MainActivity.kt
-🚀 Instalación
-Clonar el repositorio:
-git clone https://github.com/usuario/calorie-tracking-app.git
-Abrir el proyecto en Android Studio.
+---
 
-Sincronizar las dependencias de Gradle.
+## Requisitos
+- Java 11 o superior
+- Maven o Gradle (opcional, para builds automatizados)
+- Git (para clonar el repo)
 
-Ejecutar la aplicación en un emulador o dispositivo Android.
+---
 
-🎯 Objetivos del proyecto
-Aplicar conceptos de desarrollo móvil en Android.
-Implementar una arquitectura mantenible y escalable.
-Diseñar una interfaz moderna centrada en la experiencia del usuario.
-Gestionar información nutricional de manera eficiente.
-📌 Estado del proyecto
-🚧 En desarrollo
+## Instalación rápida
 
-Actualmente se encuentra en fase de implementación y pruebas.
+1. Clona el repositorio:
+   git clone https://github.com/Jjuanki/aplicacion_calorias.git
+   cd aplicacion_calorias
 
-👥 Equipo de desarrollo
-Proyecto académico desarrollado por estudiantes de ingeniería.
+2. Compilar y ejecutar (opción 1: sin tool de build)
+   - Compilar:
+     javac -d out $(find src -name "*.java")
+   - Ejecutar:
+     java -cp out tu.paquete.Principal
 
-Juan Caranqui
-📄 Licencia
-Este proyecto fue desarrollado con fines académicos y educativos.
+3. Compilar y ejecutar con Maven (si el proyecto usa Maven):
+   mvn clean package
+   java -jar target/aplicacion_calorias.jar
+
+4. Compilar y ejecutar con Gradle (si el proyecto usa Gradle):
+   ./gradlew build
+   java -jar build/libs/aplicacion_calorias.jar
+
+(Si aún no tienes un pom.xml o build.gradle, puedo ayudarte a crear uno.)
+
+---
+
+## Uso (ejemplo CLI)
+Suponiendo que `Main` es el punto de entrada:
+
+- Agregar alimento:
+  java -jar aplicacion_calorias.jar add-food --name "Manzana" --calories 52 --unit "100g"
+
+- Crear comida:
+  java -jar aplicacion_calorias.jar create-meal --name "Desayuno" --items "Manzana:150g,Cereal:30g,Leche:200ml"
+
+- Consultar total diario:
+  java -jar aplicacion_calorias.jar totals --date 2026-06-21
+
+Ejemplo de salida:
+{
+  "date": "2026-06-21",
+  "totalCalories": 650,
+  "meals": [
+    { "name": "Desayuno", "calories": 350 },
+    { "name": "Almuerzo", "calories": 300 }
+  ]
+}
+
+---
+
+## Estructura sugerida de carpetas
+- src/main/java/... (código fuente)
+- src/test/java/... (tests)
+- data/ (opcional: persistencia simple en JSON/CSV para demo)
+- docs/ (documentación adicional)
+
+---
+
+## Cómo contribuir
+1. Haz fork del repo.
+2. Crea una rama feature/tu-cosa:
+   git checkout -b feature/nueva-funcionalidad
+3. Haz commits claros y descriptivos.
+4. Abre un Pull Request describiendo el cambio.
+5. Añade tests si corresponde.
+
+Buenas ideas de contribución:
+- Integración con base de datos (H2 / SQLite)
+- Interfaz web simple (Spring Boot + Thymeleaf / REST)
+- Exportar/importar datos (CSV/JSON)
+- App móvil ligera que consuma una API
+
+---
+
+## Tests
+- Si usas Maven:
+  mvn test
+- Si usas Gradle:
+  ./gradlew test
+
+Añade pruebas unitarias con JUnit para la lógica de cálculo y parsing.
+
+---
+
+## Licencia
+Sugerido: MIT — ligero y permissivo.
+
+---
+
+## Contacto
+Creado por Jjuanki. ¿Quieres que lo suba al repo y cree un README.md? Puedo hacerlo y además:
+- Añadir un pom.xml / build.gradle básico
+- Crear ejemplos de datos en data/
+- Añadir tests iniciales
+
+---
+
+¡Listo! Si quieres, adapto el README al estilo que prefieras (más técnico, más visual con badges y screenshots, o traducido a inglés).
