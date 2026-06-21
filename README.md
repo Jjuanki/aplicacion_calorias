@@ -100,29 +100,5 @@ Buenas ideas de contribución:
 - Exportar/importar datos (CSV/JSON)
 - App móvil ligera que consuma una API
 
----
-
-## Tests
-- Si usas Maven:
-  mvn test
-- Si usas Gradle:
-  ./gradlew test
-
-Añade pruebas unitarias con JUnit para la lógica de cálculo y parsing.
-
----
-
-## Licencia
-Sugerido: MIT — ligero y permissivo.
-
----
-
 ## Contacto
-Creado por Jjuanki. ¿Quieres que lo suba al repo y cree un README.md? Puedo hacerlo y además:
-- Añadir un pom.xml / build.gradle básico
-- Crear ejemplos de datos en data/
-- Añadir tests iniciales
-
----
-
-¡Listo! Si quieres, adapto el README al estilo que prefieras (más técnico, más visual con badges y screenshots, o traducido a inglés).
+Creado por Jjuanki.
