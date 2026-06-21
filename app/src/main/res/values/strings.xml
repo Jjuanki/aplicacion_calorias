@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">aplicacion_calorias</string>
+    <string name="mi_dia">Mi Día</string>
+    <string name="hola_usuario">¡Hola, Usuario!</string>
+    <string name="hola_usuario_con_nombre">¡Hola, %1$s!</string>
+    <string name="calorias_consumidas">Calorías consumidas</string>
+    <string name="calorias_restantes">Calorías restantes</string>
+    <string name="objetivo_diario">Objetivo diario: 2000 cal</string>
+    <string name="alimentos_hoy">Alimentos de hoy</string>
+    <string name="no_alimentos">No has registrado alimentos aún</string>
+    <string name="nav_inicio">Inicio</string>
+    <string name="nav_progreso">Progreso</string>
+    <string name="nav_ajustes">Ajustes</string>
+    <string name="valor_cero">0</string>
+    <string name="valor_objetivo_inicial">2000</string>
+    <string name="inicia_sesion_continuar">Inicia sesión para continuar</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="crear_cuenta">Crear cuenta</string>
+    <string name="credenciales_incorrectas">Credenciales incorrectas</string>
+    <string name="error_correo_vacio">El correo no puede estar vacío</string>
+    <string name="error_correo_invalido">Formato de correo inválido</string>
+    <string name="error_password_vacio">La contraseña no puede estar vacía</string>
+    <string name="error_password_corto">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="nombre">Nombre</string>
+    <string name="error_campos_vacios">Completa todos los campos</string>
+    <string name="error_correo_registrado">Este correo ya está registrado</string>
+    <string name="usuario_creado">Usuario creado correctamente</string>
+</resources>
