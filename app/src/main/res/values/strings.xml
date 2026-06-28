@@ -27,4 +27,19 @@
     <string name="error_campos_vacios">Completa todos los campos</string>
     <string name="error_correo_registrado">Este correo ya está registrado</string>
     <string name="usuario_creado">Usuario creado correctamente</string>
+    <string name="agregar">Agregar</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="error_completar_campos">Por favor completa todos los campos</string>
+    <string name="eliminar_alimento">Eliminar alimento</string>
+    <string name="confirmar_eliminacion">¿Estás seguro de que quieres eliminar este alimento?</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="alimento_eliminado">Alimento eliminado</string>
+    <string name="deshacer">Deshacer</string>
+    <string name="agregar_alimento">Agregar Alimento</string>
+    <string name="editar_alimento">Editar Alimento</string>
+    <string name="notif_title_exceso">Límite de calorías excedido</string>
+    <string name="notif_content_exceso">Has consumido %1$d calorías hoy. ¡Cuidado!</string>
+    <string name="notif_channel_name">Alertas de Calorías</string>
+    <string name="notif_channel_desc">Canal para alertas de exceso de calorías diarias</string>
 </resources>

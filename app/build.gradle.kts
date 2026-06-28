@@ -43,8 +43,10 @@ dependencies {
     implementation(libs.room3.common.jvm)
     implementation(libs.room.common.jvm)
     implementation(libs.room.runtime)
+    implementation(libs.androidx.work.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     annotationProcessor(libs.room.compiler)
+    implementation(libs.work.runtime)
 }

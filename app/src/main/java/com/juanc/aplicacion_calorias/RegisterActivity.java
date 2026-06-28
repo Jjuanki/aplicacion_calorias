@@ -25,11 +25,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button btnCreate = findViewById(R.id.btnCreateAccount);
 
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "app_db")
-                .fallbackToDestructiveMigration()
-                .allowMainThreadQueries()
-                .build();
+        db = AppDatabase.getDatabase(this);
 
         btnCreate.setOnClickListener(v -> registerUser());
     }
@@ -45,23 +41,27 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // 🔴 Evitar duplicados
-        Usuario existing = db.userDao().findByEmail(email);
-        if (existing != null) {
-            Toast.makeText(this, R.string.error_correo_registrado, Toast.LENGTH_SHORT).show();
-            return;
-        }
+        new Thread(() -> {
+            // 🔴 Evitar duplicados
+            Usuario existing = db.userDao().findByEmail(email);
+            if (existing != null) {
+                runOnUiThread(() -> Toast.makeText(this, R.string.error_correo_registrado, Toast.LENGTH_SHORT).show());
+                return;
+            }
 
-        // 🔥 Insert en Room
-        Usuario user = new Usuario(name, email, password);
-        db.userDao().insertUser(user);
+            // 🔥 Insert en Room
+            Usuario user = new Usuario(name, email, password);
+            db.userDao().insertUser(user);
 
-        Toast.makeText(this, R.string.usuario_creado, Toast.LENGTH_SHORT).show();
+            runOnUiThread(() -> {
+                Toast.makeText(this, R.string.usuario_creado, Toast.LENGTH_SHORT).show();
 
-        // 🔁 Navegación a MainActivity
-        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-        intent.putExtra("nombre", name);
-        startActivity(intent);
-        finish();
+                // 🔁 Navegación a MainActivity
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                intent.putExtra("nombre", name);
+                startActivity(intent);
+                finish();
+            });
+        }).start();
     }
 }

@@ -16,11 +16,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
-    // 🔹 UI
     private TextInputLayout emailLayout, passwordLayout;
     private EditText emailEditText, passwordEditText;
 
-    // 🔹 Room DB
     private AppDatabase db;
 
     @Override
@@ -51,11 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
         // 🔹 Init Room DB
-        db = Room.databaseBuilder(getApplicationContext(),
-                        AppDatabase.class, "app_db")
-                .fallbackToDestructiveMigration()
-                .allowMainThreadQueries()
-                .build();
+        db = AppDatabase.getDatabase(this);
 
         // 🔹 Login button
         btnLogin.setOnClickListener(v -> loginUser());
@@ -69,18 +63,19 @@ public class LoginActivity extends AppCompatActivity {
         String correo = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
-        Usuario usuario = db.userDao().login(correo, password);
-
-        if (usuario != null) {
-
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("nombre", usuario.nombre);
-            startActivity(intent);
-            finish();
-
-        } else {
-            passwordLayout.setError(getString(R.string.credenciales_incorrectas));
-        }
+        new Thread(() -> {
+            Usuario usuario = db.userDao().login(correo, password);
+            runOnUiThread(() -> {
+                if (usuario != null) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("nombre", usuario.nombre);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    passwordLayout.setError(getString(R.string.credenciales_incorrectas));
+                }
+            });
+        }).start();
     }
 
     // 🔥 VALIDACIÓN
