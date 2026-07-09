@@ -5,7 +5,7 @@
     <string name="hola_usuario_con_nombre">¡Hola, %1$s!</string>
     <string name="calorias_consumidas">Calorías consumidas</string>
     <string name="calorias_restantes">Calorías restantes</string>
-    <string name="objetivo_diario">Objetivo diario: 2000 cal</string>
+    <string name="objetivo_diario">Objetivo diario: %1$d cal</string>
     <string name="alimentos_hoy">Alimentos de hoy</string>
     <string name="no_alimentos">No has registrado alimentos aún</string>
     <string name="nav_inicio">Inicio</string>
@@ -42,4 +42,17 @@
     <string name="notif_content_exceso">Has consumido %1$d calorías hoy. ¡Cuidado!</string>
     <string name="notif_channel_name">Alertas de Calorías</string>
     <string name="notif_channel_desc">Canal para alertas de exceso de calorías diarias</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="nombre_usuario">Nombre de usuario</string>
+    <string name="limite_calorias_diario">Límite de calorías diario</string>
+    <string name="habilitar_notificaciones">Habilitar notificaciones</string>
+    <string name="tema_app">Tema de la aplicación</string>
+    <string name="tema_sistema">Predeterminado del sistema</string>
+    <string name="tema_claro">Claro</string>
+    <string name="tema_oscuro">Oscuro</string>
+    <string name="guardar">Guardar</string>
+    <string name="progreso">Progreso</string>
+    <string name="promedio_diario">Promedio diario: %1$d cal</string>
+    <string name="dias_objetivo_cumplido">Días cumplidos: %1$d/7</string>
+    <string name="resumen_semanal">Resumen Semanal</string>
 </resources>

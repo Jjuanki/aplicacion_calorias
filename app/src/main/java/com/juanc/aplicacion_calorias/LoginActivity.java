@@ -23,6 +23,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        android.content.SharedPreferences sharedPreferences = getSharedPreferences(SettingsActivity.PREFS_NAME, android.content.Context.MODE_PRIVATE);
+        int themeMode = sharedPreferences.getInt(SettingsActivity.KEY_THEME, androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(themeMode);
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
@@ -67,8 +71,15 @@ public class LoginActivity extends AppCompatActivity {
             Usuario usuario = db.userDao().login(correo, password);
             runOnUiThread(() -> {
                 if (usuario != null) {
+                    android.content.SharedPreferences sharedPreferences = getSharedPreferences(SettingsActivity.PREFS_NAME, android.content.Context.MODE_PRIVATE);
+                    sharedPreferences.edit()
+                            .putString(SettingsActivity.KEY_USER_NAME, usuario.nombre)
+                            .putInt(SettingsActivity.KEY_USER_ID, usuario.id)
+                            .apply();
+
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("nombre", usuario.nombre);
+                    intent.putExtra("userId", usuario.id);
                     startActivity(intent);
                     finish();
                 } else {

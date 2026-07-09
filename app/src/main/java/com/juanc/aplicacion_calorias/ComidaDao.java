@@ -20,9 +20,12 @@ public interface ComidaDao {
     @Delete
     void delete(Comida comida);
 
-    @Query("SELECT * FROM comidas ORDER BY id DESC")
-    LiveData<List<Comida>> getAllComidas();
+    @Query("SELECT * FROM comidas WHERE usuarioId = :userId ORDER BY id DESC")
+    LiveData<List<Comida>> getAllComidas(int userId);
 
-    @Query("SELECT * FROM comidas")
-    List<Comida> getAllComidasSync();
+    @Query("SELECT * FROM comidas WHERE usuarioId = :userId AND timestamp >= :since")
+    LiveData<List<Comida>> getComidasSince(int userId, long since);
+
+    @Query("SELECT * FROM comidas WHERE usuarioId = :userId")
+    List<Comida> getAllComidasSync(int userId);
 }

@@ -1,11 +1,11 @@
 package com.juanc.aplicacion_calorias;
 
-import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
-
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,8 +36,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ComidaViewModel comidaViewModel;
-    private TextView tvConsumed, tvRemaining, tvEmpty;
+    private TextView tvConsumed, tvRemaining, tvEmpty, tvWelcome, tvDailyGoal;
     private int objetivoDiario = 2000;
+    private int userId = -1;
+    private SharedPreferences sharedPreferences;
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -47,10 +50,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPreferences = getSharedPreferences(SettingsActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        userId = sharedPreferences.getInt(SettingsActivity.KEY_USER_ID, -1);
+        int themeMode = sharedPreferences.getInt(SettingsActivity.KEY_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        AppCompatDelegate.setDefaultNightMode(themeMode);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tvWelcome = findViewById(R.id.tvWelcome);
+        tvWelcome = findViewById(R.id.tvWelcome);
+        tvDailyGoal = findViewById(R.id.tvDailyGoal);
         tvConsumed = findViewById(R.id.tvConsumed);
         tvRemaining = findViewById(R.id.tvRemaining);
         tvEmpty = findViewById(R.id.tvEmpty);
@@ -68,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         createNotificationChannel();
         checkNotificationPermission();
 
-        comidaViewModel.getAllComidas().observe(this, comidas -> {
+        comidaViewModel.getAllComidas(userId).observe(this, comidas -> {
             adapter.setComidas(comidas);
             updateCalories(comidas);
             tvEmpty.setVisibility(comidas.isEmpty() ? View.VISIBLE : View.GONE);
@@ -93,18 +102,47 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(v -> showAddFoodDialog(null));
 
         LinearLayout bottomNav = findViewById(R.id.bottomNav);
+        bottomNav.getChildAt(1).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ProgressActivity.class);
+            startActivity(intent);
+        });
         bottomNav.getChildAt(2).setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         });
 
-        String nombre = getIntent().getStringExtra("nombre");
-        if (nombre != null) {
+        loadUserSettings();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadUserSettings();
+        if (comidaViewModel != null) {
+            comidaViewModel.getAllComidas(userId).observe(this, comidas -> {
+                updateCalories(comidas);
+            });
+        }
+    }
+
+    private void loadUserSettings() {
+        String nombre = sharedPreferences.getString(SettingsActivity.KEY_USER_NAME, null);
+        if (nombre == null) {
+            nombre = getIntent().getStringExtra("nombre");
+            if (nombre != null) {
+                sharedPreferences.edit().putString(SettingsActivity.KEY_USER_NAME, nombre).apply();
+            }
+        }
+        
+        objetivoDiario = sharedPreferences.getInt(SettingsActivity.KEY_CALORIE_LIMIT, 2000);
+
+        if (nombre != null && !nombre.isEmpty()) {
             tvWelcome.setText(getString(R.string.hola_usuario_con_nombre, nombre));
         } else {
             tvWelcome.setText(R.string.hola_usuario);
         }
+
+        tvDailyGoal.setText(getString(R.string.objetivo_diario, objetivoDiario));
     }
 
     private void updateCalories(List<Comida> comidas) {
@@ -162,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             if (!name.isEmpty() && !caloriesStr.isEmpty()) {
                 int calories = Integer.parseInt(caloriesStr);
                 if (comidaToEdit == null) {
-                    comidaViewModel.insert(new Comida(name, calories));
+                    comidaViewModel.insert(new Comida(name, calories, userId));
                 } else {
                     comidaToEdit.setNombre(name);
                     comidaToEdit.setCalorias(calories);

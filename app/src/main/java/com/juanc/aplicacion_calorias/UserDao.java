@@ -8,7 +8,7 @@ import androidx.room.Query;
 public interface UserDao {
 
     @Insert
-    void insertUser(Usuario usuario);
+    long insertUser(Usuario usuario);
 
     @Query("SELECT * FROM usuarios WHERE correo = :correo AND password = :password LIMIT 1")
     Usuario login(String correo, String password);

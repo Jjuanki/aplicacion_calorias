@@ -51,14 +51,21 @@ public class RegisterActivity extends AppCompatActivity {
 
             // 🔥 Insert en Room
             Usuario user = new Usuario(name, email, password);
-            db.userDao().insertUser(user);
+            long id = db.userDao().insertUser(user);
 
             runOnUiThread(() -> {
+                android.content.SharedPreferences sharedPreferences = getSharedPreferences(SettingsActivity.PREFS_NAME, android.content.Context.MODE_PRIVATE);
+                sharedPreferences.edit()
+                        .putString(SettingsActivity.KEY_USER_NAME, name)
+                        .putInt(SettingsActivity.KEY_USER_ID, (int) id)
+                        .commit(); // Use commit for synchronous save
+
                 Toast.makeText(this, R.string.usuario_creado, Toast.LENGTH_SHORT).show();
 
                 // 🔁 Navegación a MainActivity
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                 intent.putExtra("nombre", name);
+                intent.putExtra("userId", (int) id);
                 startActivity(intent);
                 finish();
             });

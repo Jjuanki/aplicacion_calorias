@@ -24,22 +24,22 @@ public class CalorieWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        android.content.SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SettingsActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        boolean notificationsEnabled = sharedPreferences.getBoolean(SettingsActivity.KEY_NOTIFICATIONS, true);
+        int userId = sharedPreferences.getInt(SettingsActivity.KEY_USER_ID, -1);
+
+        if (!notificationsEnabled || userId == -1) {
+            return Result.success();
+        }
+
         AppDatabase db = AppDatabase.getDatabase(getApplicationContext());
-        // Note: Room's LiveData getAllComidas() is async, but we need a synchronous call for the worker.
-        // Let's assume we might need a sync method in Dao or use the LiveData value if it's already there (not ideal).
-        // Actually, workers run on a background thread, so we should use a non-LiveData query.
-        
-        // I should check if ComidaDao has a synchronous version of getAllComidas.
-        // Looking at previous read_file of ComidaDao, it only has LiveData<List<Comida>> getAllComidas().
-        // I need to add a synchronous one or handle it.
-        
-        List<Comida> comidas = db.comidaDao().getAllComidasSync();
+        List<Comida> comidas = db.comidaDao().getAllComidasSync(userId);
         int totalCalories = 0;
         for (Comida c : comidas) {
             totalCalories += c.getCalorias();
         }
 
-        int objetivoDiario = 2000; // This should ideally be shared via preferences or data, but 2000 is used in MainActivity.
+        int objetivoDiario = sharedPreferences.getInt(SettingsActivity.KEY_CALORIE_LIMIT, 2000);
 
         if (totalCalories > objetivoDiario) {
             sendNotification(totalCalories);

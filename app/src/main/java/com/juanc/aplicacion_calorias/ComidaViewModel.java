@@ -10,18 +10,20 @@ import java.util.concurrent.Executors;
 
 public class ComidaViewModel extends AndroidViewModel {
     private final ComidaDao comidaDao;
-    private final LiveData<List<Comida>> allComidas;
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
     public ComidaViewModel(@NonNull Application application) {
         super(application);
         AppDatabase db = AppDatabase.getDatabase(application);
         comidaDao = db.comidaDao();
-        allComidas = comidaDao.getAllComidas();
     }
 
-    public LiveData<List<Comida>> getAllComidas() {
-        return allComidas;
+    public LiveData<List<Comida>> getAllComidas(int userId) {
+        return comidaDao.getAllComidas(userId);
+    }
+
+    public LiveData<List<Comida>> getComidasSince(int userId, long since) {
+        return comidaDao.getComidasSince(userId, since);
     }
 
     public void insert(Comida comida) {

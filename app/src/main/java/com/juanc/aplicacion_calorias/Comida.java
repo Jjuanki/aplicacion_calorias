@@ -9,10 +9,14 @@ public class Comida {
     private int id;
     private String nombre;
     private int calorias;
+    private long timestamp;
+    private int usuarioId;
 
-    public Comida(String nombre, int calorias) {
+    public Comida(String nombre, int calorias, int usuarioId) {
         this.nombre = nombre;
         this.calorias = calorias;
+        this.usuarioId = usuarioId;
+        this.timestamp = System.currentTimeMillis();
     }
 
     public int getId() { return id; }
@@ -21,4 +25,8 @@ public class Comida {
     public void setNombre(String nombre) { this.nombre = nombre; }
     public int getCalorias() { return calorias; }
     public void setCalorias(int calorias) { this.calorias = calorias; }
+    public long getTimestamp() { return timestamp; }
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+    public int getUsuarioId() { return usuarioId; }
+    public void setUsuarioId(int usuarioId) { this.usuarioId = usuarioId; }
 }
