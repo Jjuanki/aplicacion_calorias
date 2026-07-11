@@ -41,6 +41,16 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        if (!Validador.validarCorreo(email)) {
+            Toast.makeText(this, R.string.error_correo_invalido, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!Validador.validarPassword(password)) {
+            Toast.makeText(this, R.string.error_password_corto, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         new Thread(() -> {
             // 🔴 Evitar duplicados
             Usuario existing = db.userDao().findByEmail(email);

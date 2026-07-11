@@ -101,12 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
         fab.setOnClickListener(v -> showAddFoodDialog(null));
 
-        LinearLayout bottomNav = findViewById(R.id.bottomNav);
-        bottomNav.getChildAt(1).setOnClickListener(v -> {
+        findViewById(R.id.btnNavProgreso).setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ProgressActivity.class);
             startActivity(intent);
         });
-        bottomNav.getChildAt(2).setOnClickListener(v -> {
+        findViewById(R.id.btnNavAjustes).setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         });

@@ -1,6 +1,7 @@
 package com.juanc.aplicacion_calorias;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
@@ -36,12 +37,14 @@ public class SettingsActivity extends AppCompatActivity {
         switchNotifications = findViewById(R.id.switchNotifications);
         rgTheme = findViewById(R.id.rgTheme);
         Button btnSave = findViewById(R.id.btnSaveSettings);
+        Button btnLogout = findViewById(R.id.btnLogout);
 
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
         loadSettings();
 
         btnSave.setOnClickListener(v -> saveSettings());
+        btnLogout.setOnClickListener(v -> logout());
     }
 
     private void loadSettings() {
@@ -95,6 +98,20 @@ public class SettingsActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(themeMode);
         
         Toast.makeText(this, "Ajustes guardados", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(KEY_USER_ID);
+        editor.remove(KEY_USER_NAME);
+        // We keep theme and other global settings if desired, or clear all. 
+        // Usually, ID and Name are enough to force re-login.
+        editor.apply();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 }

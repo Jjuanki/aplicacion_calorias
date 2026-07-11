@@ -55,4 +55,5 @@
     <string name="promedio_diario">Promedio diario: %1$d cal</string>
     <string name="dias_objetivo_cumplido">Días cumplidos: %1$d/7</string>
     <string name="resumen_semanal">Resumen Semanal</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
 </resources>

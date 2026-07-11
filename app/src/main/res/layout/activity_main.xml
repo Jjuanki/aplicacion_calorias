@@ -156,42 +156,65 @@
         app:backgroundTint="#1E90FF"
         app:tint="#FFFFFF"/>
 
-    <!-- Bottom nav (solo visual por ahora) -->
+    <!-- Bottom nav -->
     <LinearLayout
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         android:background="#1A1A1A"
         android:gravity="center"
-        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNavInicio"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="@string/nav_inicio"
-            android:textColor="#FFFFFF"
             android:layout_weight="1"
-            android:gravity="center"/>
+            android:text="@string/nav_inicio"
+            android:textColor="#C94BFF"
+            app:icon="@android:drawable/ic_menu_today"
+            app:iconTint="#C94BFF"
+            app:iconGravity="top"
+            android:textSize="10sp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:rippleColor="#33C94BFF"/>
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNavProgreso"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/nav_progreso"
             android:textColor="#FFFFFF"
-            android:layout_weight="1"
-            android:gravity="center"/>
+            app:icon="@android:drawable/ic_menu_view"
+            app:iconTint="#FFFFFF"
+            app:iconGravity="top"
+            android:textSize="10sp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:rippleColor="#33FFFFFF"/>
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNavAjustes"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/nav_ajustes"
             android:textColor="#FFFFFF"
-            android:layout_weight="1"
-            android:gravity="center"/>
+            app:icon="@android:drawable/ic_menu_preferences"
+            app:iconTint="#FFFFFF"
+            app:iconGravity="top"
+            android:textSize="10sp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:rippleColor="#33FFFFFF"/>
 
     </LinearLayout>
 
